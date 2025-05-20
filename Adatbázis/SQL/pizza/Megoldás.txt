@@ -1,0 +1,86 @@
+1.
+select * from pfutar;
+
+2.
+select pnev, par from ppizza;
+
+3.
+select avg(par) from ppizza;
+
+4.
+select pnev, par from ppizza where par<1000;
+
+5.
+select razon, fnev
+from prendeles, pfutar
+where prendeles.fazon=pfutar.fazon
+and razon='1';
+
+6.
+select vnev, ido
+from pvevo, prendeles
+where pvevo.vazon=prendeles.vazon
+and ido between 0.00 and 12.00;
+
+7.
+select vnev, pnev
+from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.vazon=ptetel.razon and ptetel.pazon=ppizza.pazon and vnev ="Szundi";
+
+8.
+select fnev from pfutar, prendeles, pvevo
+where pvevo.vazon=prendeles.vazon and prendeles.fazon=pfutar.fazon and vnev="Tudor";
+
+9.
+select vnev, fnev from pvevo, pfutar, prendeles
+where pvevo.vazon=prendeles.vazon and prendeles.fazon=pfutar.fazon;
+
+10.
+select sum(ptetel.db * ppizza.par) as Költség from ptetel, ppizza, prendeles, pvevo
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon and vnev="Morgó"
+
+11.
+select count(prendeles.razon) as darabszám from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon and pnev ="Sorrento" and vnev="Vidor"
+
+12.
+select sum(ptetel.db) as Darabszám from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon and vnev="Hapci"
+
+13.
+select count(prendeles.razon) as darabszám from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon and vnev="Szende"
+
+14.
+select pnev, sum(ptetel.db) as Darabszám from ppizza, ptetel
+where ptetel.pazon=ppizza.pazon and ppizza.pnev="Hawaii"
+
+15.
+select vnev, sum(ppizza.par * ptetel.db) as Teljes_Koltes from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon
+group by vnev
+
+16.
+select pnev, par from ppizza
+order by par desc limit 1
+
+17.
+select vnev, sum(ptetel.db) as Darabszám from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon
+group by vnev
+order by Darabszám desc limit 1
+
+18.
+select vnev, pnev, sum(ptetel.db) as Darabszám from pvevo, prendeles, ptetel, ppizza
+where pvevo.vazon=prendeles.vazon and prendeles.razon=ptetel.razon and ptetel.pazon=ppizza.pazon and vnev="Szundi"
+order by Darabszám desc limit 1
+
+19.
+SELECT pnev, par
+FROM ppizza
+WHERE par<(SELECT par FROM ppizza WHERE pnev LIKE 'Capricciosa');
+
+20.
+SELECT pnev, par
+FROM ppizza
+WHERE par>(SELECT AVG(par) FROM ppizza)
